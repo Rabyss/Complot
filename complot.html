@@ -1,0 +1,66 @@
+<head>
+    <title>Complot</title>
+</head>
+
+<body>
+    {{> header }}
+    {{#if isAbout}}
+    	{{> about}}
+    {{/if}}
+    {{#if isGame}}
+    	{{> game}}
+    {{/if}}
+    
+</body>
+
+<template name="game">
+	<form class="join-room">
+		<input type="text" name="name" placeholder="Your name" />
+		<input type="text" name="roomName" placeholder="Room name" />
+		<br>
+		<button>Create/join</button>
+	</form>
+</template>
+
+<template name="header">
+    <header class="navbar" id="header">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Complot</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active" page="game"><a href="#">Game</a></li>
+                <li page="about"><a href="#">About</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+</template>
+
+<template name="about">
+	<div class="container-fluid">
+		<h3>Rules</h3>
+		<ul>
+			{{#each rules}}
+				{{> rule}}
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="rule">
+	<li>
+		<span class="text">{{text}}</span>
+		<ul>
+			{{#each subrules}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ul>
+	</li>
+</template>

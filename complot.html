@@ -14,12 +14,18 @@
 </body>
 
 <template name="game">
-	<form class="join-room">
-		<input type="text" name="name" placeholder="Your name" />
-		<input type="text" name="roomName" placeholder="Room name" />
-		<br>
-		<button>Create/join</button>
-	</form>
+	<div class="container-fluid">
+		{{#if inRoom}}
+			{{> room}}
+		{{else}}
+			<form class="join-room">
+				<input type="text" name="name" placeholder="Your name" />
+				<input type="text" name="roomName" placeholder="Room name" />
+				<br>
+				<button>Create/join</button>
+			</form>
+		{{/if}}
+	</div>
 </template>
 
 <template name="header">
@@ -62,5 +68,50 @@
 				<li>{{this}}</li>
 			{{/each}}
 		</ul>
+	</li>
+</template>
+
+<template name="room">
+	<h3>{{name}}</h3>
+	{{#if isMember}}
+		<h4>Members</h4>
+		<ul>
+			{{#each members}}
+				{{> member}}
+			{{/each}}
+		</ul>
+		<h4>Requests</h4>
+		<ul>
+			{{#each requests}}
+				{{> request}}
+			{{/each}}
+		</ul>
+	{{else}}
+		{{#if requestExists}}
+			Request pending...
+		{{else}}
+			Cannot join that room.
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="member">
+	<li>
+		{{#if owner}}
+			<button class="delete" name="{{this}}">&times;</button>
+		{{else}}
+			{{#if isSelf}}
+				<button class="delete" name="{{this}}">&times;</button>
+			{{/if}}
+		{{/if}}
+		{{this}}
+	</li>
+</template>
+
+<template name="request">
+	<li>
+		<button class="delete" name="{{this}}">&times;</button>
+		{{this}}
+		<button class="accept" name="{{this}}">&#10003;</button>
 	</li>
 </template>
